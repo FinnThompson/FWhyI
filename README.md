@@ -1,2 +1,0 @@
-# FWhyI
-Useless Fact Generator
