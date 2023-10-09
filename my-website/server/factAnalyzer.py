@@ -1,5 +1,5 @@
 # fun_fact_analyzer.py
-import json  # Import the json module
+import json
 import sys
 import nltk
 from nltk import pos_tag, word_tokenize
@@ -12,9 +12,10 @@ def extract_entities(text):
     relevant_words = []
     for entity in entities:
         if isinstance(entity, tuple):
-            relevant_words.append(entity[0])
+            if(entity[1].startswith('NN')):
+                relevant_words.append(entity[0])
         elif isinstance(entity, nltk.Tree):
-            relevant_words.append(" ".join([word for word, tag in entity.leaves()]))
+            relevant_words.append(" ".join([word for word, tag in entity.leaves() if tag.startswith('NN')]))  # Filter only nouns (NN, NNS, etc.)
     return relevant_words
 
 def calculate_word_scores(text):
@@ -29,6 +30,6 @@ def calculate_word_scores(text):
 
 
 if __name__ == "__main__":
-    text = sys.argv[1]
+    text = sys.argv[1]  # Get the first command-line argument
     word_scores = calculate_word_scores(text)
-    print(json.dumps(word_scores))
+    print(json.dumps(word_scores))  # Print the JSON output
