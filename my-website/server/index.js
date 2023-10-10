@@ -32,11 +32,12 @@ app.post('/analyze-fact', (req, res) => {
     const pythonScriptPath = './factAnalyzer.py';
    
 
-    const command = `python ${pythonScriptPath} "${text}"`;
-    console.log(pythonScriptPath);
-
+    const command = `python3 ${pythonScriptPath} "${text}"`;
     exec(command, (error, stdout, stderr) => {
+        console.log('stdout:', stdout);
+        console.log('stderr:', stderr);
         if (error) {
+            console.error('Error:', error);
             return res.status(500).json({ error: 'Failed to analyze the fact.' });
         }
         

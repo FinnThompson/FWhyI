@@ -17,8 +17,8 @@ def extract_entities(text):
             #if(entity[1].startswith('NN')):
                 relevant_words.append(entity[0])
         elif isinstance(entity, nltk.Tree):
-            relevant_words.append(" ".join([word for word, tag in entity.leaves()]))
-            #relevant_words.append(" ".join([word for word, tag in entity.leaves() if tag.startswith('NN')]))  # Filter only nouns (NN, NNS, etc.)
+            #relevant_words.append(" ".join([word for word, tag in entity.leaves()]))
+            relevant_words.append(" ".join([word for word, tag in entity.leaves() if tag.startswith('NN')]))  # Filter only nouns (NN, NNS, etc.)
     return relevant_words
 
 def calculate_word_scores(text):
