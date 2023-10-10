@@ -19,20 +19,18 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate }) => {
     return timeLeft;
   };
 
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setTimeLeft(calculateTimeLeft());
+      setTimeLeft(calculateTimeLeft);
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [targetDate]);
 
   return (
-    
-    <div className="countdown-timer">
-      {timeLeft.days && <span>{timeLeft.days}d </span>}
+    <div className="countdown-timer" >
       {timeLeft.hours && <span>{timeLeft.hours}h </span>}
       {timeLeft.minutes && <span>{timeLeft.minutes}m </span>}
       {timeLeft.seconds && <span>{timeLeft.seconds}s </span>}

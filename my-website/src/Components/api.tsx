@@ -1,9 +1,11 @@
-// api.ts
-
-import { supabase } from './supabase'; // Assume you have your Supabase client initialized in this file
+import { supabase } from './supabase';
+import { format } from 'date-fns-tz'; // Import the format function from date-fns-tz
 
 export async function getFunFact(): Promise<string> {
-  const { data, error } = await supabase.from('funfacts').select('fact').eq('date', new Date().toISOString().split('T')[0]);
+  // Get the current date in EST timezone
+  const estDate = format(new Date(), 'yyyy-MM-dd', { timeZone: 'America/New_York' });
+
+  const { data, error } = await supabase.from('funfacts').select('fact').eq('date', estDate);
   if (error) {
     throw error;
   }
@@ -15,4 +17,24 @@ export async function getFunFact(): Promise<string> {
   }
 }
 
-export{}
+export async function getFunFactTag(): Promise<string | null> {
+  // Get the current date in EST timezone
+  const estDate = format(new Date(), 'yyyy-MM-dd', { timeZone: 'America/New_York' });
+
+  const { data, error } = await supabase
+    .from('funfacts')
+    .select('tag')
+    .eq('date', estDate);
+
+    console.log(data)
+
+  if (error) {
+    throw error;
+  }
+
+  if (data && data.length > 0) {
+    return data[0].tag;
+  } else {
+    return null;
+  }
+}
