@@ -76,8 +76,28 @@ async function insertFunFact() {
 
                 const tag = secondMostPopularWord ? `${mostPopularWord}, ${secondMostPopularWord}` : mostPopularWord;
 
+
+                const apiKey = '26449723-554b1a548f2e90edf3bcfd722';
+                const url = `https://pixabay.com/api/?key=${apiKey}&q=${encodeURIComponent(tag)}&image_type=photo`;
+                let imageUrl = null;
+                try {
+                  const response = await fetch(url);
+                  const data = await response.json();
+                  if (data.totalHits > 0) {
+                    imageUrl = data.hits[0].largeImageURL; // Set the image URL in the state
+                  } else {
+                    await insertFunFact();
+                    console.log('No images found for the given search term.');
+                  }
+                } catch (error) {
+                  console.error('Error fetching data from Pixabay:', error);
+                }
+
+
+
+                
                 // Insert the fun fact and date into Supabase
-                const { data, error } = await supabase.from('funfacts').insert([{ fact: funFact, date: formattedDate, tag }]);
+                const { data, error } = await supabase.from('funfacts').insert([{ fact: funFact, date: formattedDate, tag, imageURL: imageUrl }]);
                 if (error) {
                     console.error(`Error inserting fun fact for ${formattedDate} into Supabase:`, error);
                 } else {
@@ -87,7 +107,7 @@ async function insertFunFact() {
 
                 // If no valid word found, call the function again recursively
                 console.log('No valid word found. Calling function again.');
-                //await insertFunFact();
+                await insertFunFact();
             }
         }
     } catch (error) {
