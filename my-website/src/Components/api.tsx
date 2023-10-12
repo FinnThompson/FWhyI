@@ -38,3 +38,25 @@ export async function getFunFactTag(): Promise<string | null> {
     return null;
   }
 }
+
+export async function getImageURL(): Promise<string | null> {
+  // Get the current date in EST timezone
+  const estDate = format(new Date(), 'yyyy-MM-dd', { timeZone: 'America/New_York' });
+
+  const { data, error } = await supabase
+    .from('funfacts')
+    .select('imageURL')
+    .eq('date', estDate);
+
+    console.log(data)
+
+  if (error) {
+    throw error;
+  }
+
+  if (data && data.length > 0) {
+    return data[0].imageURL;
+  } else {
+    return null;
+  }
+}

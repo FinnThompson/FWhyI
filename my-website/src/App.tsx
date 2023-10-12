@@ -7,6 +7,7 @@ import { analyzeFactComp } from './Components/analyzeFact';
 import CountdownTimer from './Components/countdownTimer';
 import PixabayFetch from './Components/pixabayFetch';
 import { getFunFactTag } from './Components/api';
+import { fetchImageDatabase } from './Components/fetchImageURL';
 
 function App() {
   const [todaysFact, setTodaysFact] = useState<string>('');
@@ -80,6 +81,24 @@ function App() {
       console.error('Error occurred during analysis:', error);
     }
   };
+
+  useEffect(() => {
+    const fetchImageURLFromDatabase = async () => {
+      try {
+        // Call your function to fetch the imageURL based on today's date
+        const response = await fetchImageDatabase(); // Replace yourFetchFunction with your actual function to fetch data from the database
+        
+        // Assuming your response has a property called 'imageURL'
+        setImageUrl(response);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchImageURLFromDatabase();
+  }, []); // Empty dependency array ensures that this effect runs once after the initial render
 
   const handleInsertClick = async () => {
     await insertFunFact();

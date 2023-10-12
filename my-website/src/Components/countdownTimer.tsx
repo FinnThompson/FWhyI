@@ -30,11 +30,18 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ targetDate }) => {
   }, [targetDate]);
 
   return (
-    <div className="countdown-timer" >
-      {timeLeft.hours && <span>{timeLeft.hours}h </span>}
-      {timeLeft.minutes && <span>{timeLeft.minutes}m </span>}
-      {timeLeft.seconds && <span>{timeLeft.seconds}s </span>}
-      until the next fact!
+    <div className="countdown-timer">
+      {timeLeft.days || timeLeft.hours || timeLeft.minutes || timeLeft.seconds ? (
+        <React.Fragment>
+          {timeLeft.days && <span>{timeLeft.days}d </span>}
+          {timeLeft.hours && <span>{timeLeft.hours}h </span>}
+          {timeLeft.minutes && <span>{timeLeft.minutes}m </span>}
+          {timeLeft.seconds && <span>{timeLeft.seconds}s </span>}
+          until the next fact!
+        </React.Fragment>
+      ) : (
+        <span>Refresh the Page to see a new fact!</span>
+      )}
     </div>
   );
 };
