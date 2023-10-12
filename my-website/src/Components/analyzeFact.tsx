@@ -1,5 +1,4 @@
 export const analyzeFactComp = async (text: string): Promise<Record<string, number>> => {
-    console.log("had to do this")
     try {
       const response = await fetch('http://localhost:3005/analyze-fact', {
         method: 'POST',
