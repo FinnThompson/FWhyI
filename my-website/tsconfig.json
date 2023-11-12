@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-, "server/factAnalyzerTransformer.tsx"  ]
+, "server/factAnalyzerTransformer.tsx", "test.ts"  ]
 }

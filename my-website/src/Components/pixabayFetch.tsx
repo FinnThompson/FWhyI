@@ -18,7 +18,7 @@ const PixabayFetch: React.FC<PixabayFetchProps> = ({ searchWord, setImageUrl }) 
   useEffect(() => {
     const fetchPixabayData = async () => {
 
-       const Image = await getImageURL();
+    const Image = await getImageURL();
     setImageUrl(Image!);
     return null;
 
