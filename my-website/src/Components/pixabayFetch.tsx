@@ -4,6 +4,8 @@ import { getImageURL } from './api';
 
 import { createClient } from '@supabase/supabase-js';
 
+//TODO: make the image fetch using Dalle API
+
 
 const SUPABASE_URL: string = process.env.REACT_APP_SUPABASE_URL!;
 const SUPABASE_API_KEY: string = process.env.REACT_APP_SUPABASE_API_KEY!;
